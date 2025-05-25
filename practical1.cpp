@@ -1,3 +1,5 @@
+# Sum of the first n terms
+
 #include <iostream>
 #include <cmath>  // for pow()
 #include <cstdlib> // for atoi()
