@@ -1,39 +1,33 @@
 #include <iostream>
-#include <algorithm>
 using namespace std;
 
-int removeDuplicates(int arr[], int n) {
-    if (n == 0 || n == 1) return n;
+int main() {
+    int arr[100], n;
 
-    sort(arr, arr + n);
+    cout << "Enter number of elements: ";
+    cin >> n;
 
-    int j = 0;
+    cout << "Enter array elements:\n";
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
 
-
-    for (int i == 0; i < n - 1; i++) {
-        if (arr[i] != arr[i + 1]) {
-            arr[j++] = arr[i];
+    // Removing duplicates
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; ) {
+            if (arr[i] == arr[j]) {
+                // Shift elements left to remove duplicate
+                for (int k = j; k < n - 1; k++)
+                    arr[k] = arr[k + 1];
+                n--; // reduce array size
+            } else {
+                j++;
+            }
         }
     }
-    arr[j++] = arr[n - 1];
-    return j;
-}
 
-int main() {
-    int arr[] = {4, 2, 2, 1, 4, 4, 6, 3, 6};
-    int n = sizeof(arr) / sizeof(arr[0]);
-
-    cout << "Original array: ";
-    for (int i = 0; i < n; i++) 
+    cout << "Array after removing duplicates:\n";
+    for (int i = 0; i < n; i++)
         cout << arr[i] << " ";
-    cout << endl;
-
-    n = removeDuplicates(arr, n);
-
-    cout << "Array after removing duplicates: ";
-    for (int i = 0; i < n; i++) 
-        cout << arr[i] << " ";
-    cout << endl;
 
     return 0;
 }
