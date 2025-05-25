@@ -1,34 +1,28 @@
 #include <iostream>
-#include <string>
-#include <map>
-#include <cctype> // for isalpha and tolower
+#include <cctype> // for isalpha, tolower
 using namespace std;
 
-void countOccurrences(string str) {
-    map<char, int> freq;
+int main(int argc, char* argv[]) {
+    int count[26] = {0};
 
-    for (char c : str) {
-        if (isalpha(c)) { // Consider only alphabets
-            freq[tolower(c)]++;
+    // Loop over each argument starting from index 1 (index 0 is program name)
+    for (int i = 1; i < argc; i++) {
+        char* p = argv[i];
+        while (*p) {
+            if (isalpha(*p)) {
+                char ch = tolower(*p);
+                count[ch - 'a']++;
+            }
+            p++;
         }
     }
 
-    cout << "Character Frequency Table:\n";
-    cout << "Letter\tCount\n";
-    for (auto pair : freq) {
-        cout << pair.first << "\t" << pair.second << endl;
-    }
-}
-
-int main(int argc, char* argv[]) {
-    string input = "";
-
-    // Combine all command line arguments into one string
-    for (int i = 1; i < argc; ++i) {
-        input += argv[i];
-        input += " "; // Add space between words
+    // Print the table
+    cout << "Alphabet\tCount\n";
+    for (int i = 0; i < 26; i++) {
+        if (count[i] > 0)
+            cout << char('a' + i) << "\t\t" << count[i] << endl;
     }
 
-    countOccurrences(input);
     return 0;
 }
