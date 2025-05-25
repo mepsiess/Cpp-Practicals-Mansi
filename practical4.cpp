@@ -1,120 +1,116 @@
 #include <iostream>
-#include <cstring>
 using namespace std;
 
-void displayASCII (string str) {
-    cout << "ASCII Values: \n";
-    for (char c : str) {
-        cout << c << " -> " << int(c) << endl;
+void showAddress(char str[]) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        cout << "Character: " << str[i] << " | Address: " << (void*)&str[i] << endl;
     }
 }
 
-void concatenateStrings (char str1[], char str2[]) {
-    int i = strlen(str1), j = 0;
+void concatenate(char str1[], char str2[]) {
+    int i = 0;
+    while (str1[i] != '\0') i++; // go to end of str1
+    int j = 0;
     while (str2[j] != '\0') {
-        str1[i++] = str2[j];
-        i++; j++;
+        str1[i++] = str2[j++];
     }
     str1[i] = '\0';
-}   
+    cout << "Concatenated string: " << str1 << endl;
+}
 
-bool compareStrings (char str1[], char str2[]) {
+void compare(char str1[], char str2[]) {
     int i = 0;
     while (str1[i] != '\0' && str2[i] != '\0') {
-        if (str1[i] != str2[i])
-            return false;
-        t++;
+        if (str1[i] != str2[i]) {
+            cout << "Strings are not equal." << endl;
+            return;
+        }
+        i++;
     }
-    return str1[i] == str2[i];
+    if (str1[i] == '\0' && str2[i] == '\0')
+        cout << "Strings are equal." << endl;
+    else
+        cout << "Strings are not equal." << endl;
 }
 
-int stringLength (char* str) {
-    int len = 0;
-    while (*str[len] != '\0') {
-        len++;
+void lengthWithPointers(char* str) {
+    int length = 0;
+    while (*str != '\0') {
+        length++;
         str++;
     }
-return len;
+    cout << "Length of the string: " << length << endl;
 }
 
-void toUpperCase (char str[]) {
-     int i = 0; 
-   while (str[i] != '\0') { 
-       if (str[i] >= 'a' && str[i] <= 'z') { 
-           str[i] = 32; 
-       } 
-       i++; 
-   } 
-} 
-
-// Reverse string 
-
-void reverseString(char str[]) { 
-   int len = stringLength (str); 
-   for (int i = 0; i < len / 2; i++) {
-      swap(str[i], str[len-i-1]); 
-   } 
-} 
-
-int main() { 
-    char str1[100], str2[100]; 
-    
-    cout << "Enter first string: "; 
-    cin >> str1; 
-    cout << "Enter second string: "; 
-    cin >> str2; 
-
-    displayASCII(str1); 
-
-// Concatenation 
-
-    concatenateStrings (str1, str2); 
-    cout << "Concatenated String: " << str1 << endl; 
-
-       // Comparison 
-    cout << "Strings are << (compareStrings (str1, str2) ? "equal": "not equal") << endl; 
-
-       // String length 
-    cout << "Length of first string: " << stringLength(str1) << endl; 
-
-       // Convert to uppercase 
-    toUppercase(str1); 
-    cout << "Uppercase String: "<< str1 << endl;
-
-} 
-
-// Reverse string 
-void reverseString(char str[]) { 
-   int len = stringLength(str); 
-   for (int i = 0; i < len / 2; i++) { 
-      swap(str[i], str[len i 1]); 
-   } 
+void toUppercase(char str[]) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
+            str[i] -= 32;
+        }
+    }
+    cout << "Uppercase string: " << str << endl;
 }
-int main() { 
-   char str1[110], str2[110]; 
 
-   cout << "Enter first string: "; 
-   cin >> str1; 
-   cout << "Enter second string: 
-   cin >> str2; 
+void reverseString(char str[]) {
+    int len = 0;
+    while (str[len] != '\0') len++;
+    for (int i = 0; i < len / 2; i++) {
+        char temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = temp;
+    }
+    cout << "Reversed string: " << str << endl;
+}
 
-   displayASCII(str1); 
+int main() {
+    char str1[100], str2[100];
+    int choice;
 
-   // Concatenation 
-   concatenateStrings (str1, str2); 
-   cout << "Concatenated String: <<<< str1 << endl; 
+    cout << "Enter string 1: ";
+    cin.getline(str1, 100);
 
-      // Comparison 
-   cout << "Strings are <<< (compareStrings (str1, str2) ? "equal": "not equal") <<< endl; 
+    while (true) {
+        cout << "\nMenu:\n";
+        cout << "1. Show address of each character\n";
+        cout << "2. Concatenate with another string\n";
+        cout << "3. Compare with another string\n";
+        cout << "4. Length of the string (using pointers)\n";
+        cout << "5. Convert to uppercase\n";
+        cout << "6. Reverse the string\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); // clear newline from buffer
 
-      // String length 
-   cout << "Length of first string: <<<<< stringLength(str1) << endl; 
+        switch (choice) {
+            case 1:
+                showAddress(str1);
+                break;
+            case 2:
+                cout << "Enter string 2: ";
+                cin.getline(str2, 100);
+                concatenate(str1, str2);
+                break;
+            case 3:
+                cout << "Enter string 2: ";
+                cin.getline(str2, 100);
+                compare(str1, str2);
+                break;
+            case 4:
+                lengthWithPointers(str1);
+                break;
+            case 5:
+                toUppercase(str1);
+                break;
+            case 6:
+                reverseString(str1);
+                break;
+            case 7:
+                return 0;
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+    }
 
-      // Convert to uppercase toUppercase(str1); 
-   cout << "Uppercase String: <<<<< str1 << endl; 
-
-      // Reverse string 
-   reverseString(str1); 
-   cout << "Reversed String: <<<< str1 << endl; 
-   return 0; 
+    return 0;
 }
